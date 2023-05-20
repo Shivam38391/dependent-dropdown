@@ -1,16 +1,31 @@
+
 import countryStates from './countriesdatasets.json' assert { type: 'json' };
 console.log(countryStates);
 console.log(typeof countryStates);
-
-// $(document).ready(function(){
-//   console.log("jquery working")
+console.log(Object.keys(countryStates).length);
 
 
+
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2({
+        placeholder: 'Select an option',
+        allowClear: true,
+
+      });
+
+
+    //   $('.js-example-basic-single').trigger('change')
+
+    //  console.log( $('.js-example-basic-single').select2('data'));
+
+      let selectedOne = $('.js-example-basic-single').find(':selected');
+      console.log(selectedOne)
 
       // Get references to the dropdown elements
       const countryDropdown = document.getElementById("country");
       const stateDropdown = document.getElementById("state");
-      // let selectedCountryFromJquery = $("span").text()
+
 
     // Populate the state dropdown
     const populateCountries = Object.keys(countryStates);
@@ -22,15 +37,11 @@ console.log(typeof countryStates);
                     countryDropdown.appendChild(option);
                   });
 
-      
-  
-      // Add event listener to country dropdown
+        $("#country").change(function(){
+            console.log("Country has been changed.");
 
-      countryDropdown.addEventListener("change", function() {
-        const selectedCountry = countryDropdown.value;
-
-
-        console.log(selectedCountry)
+            const selectedCountry = countryDropdown.value;
+            console.log(selectedCountry)
 
         // Clear previous options in the state dropdown
         stateDropdown.innerHTML = "<option value=''></option>";
@@ -49,12 +60,27 @@ console.log(typeof countryStates);
 
           });
         }
-      });
+
+        $('.st').select2({
+            placeholder: 'Select State',
+            allowClear: true,
+    
+          });
+
+        });
+
+        $("#state").change(function(){
+            console.log("State has been changed.");
+            const selectedState = stateDropdown.value;
+            console.log(selectedState)
+
+          });
 
 
-    // })
 
-    // In your Javascript (external .js resource or <script> tag)
-$(document).ready(function() {
-  $('.ch').select2();
+
 });
+
+
+
+

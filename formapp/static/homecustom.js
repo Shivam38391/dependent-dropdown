@@ -79,6 +79,75 @@ $(document).ready(function() {
 
 
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++form ajax calls +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+$.ajax({
+  url : "/environment-list/",
+  dataType: "json",
+
+  success : successfn,
+  error : errorfn,
+
+})
+
+function successfn(response, status){
+  console.log(response)
+  const { environments } = response
+  console.log(environments[0])
+  console.log(environments)
+
+  // console.log(x.id,y.Environment)
+
+
+
+
+
+//   var data = [
+
+// ];
+
+for (let r in environments){
+
+
+  
+  // data.push(
+  //    {
+  //       id: `${environments[r].id}`,
+  //       text: `${environments[r].Environment}`
+  //   }
+  
+  //   )
+
+
+    let optionhtmlelement =`<option value="${ environments[r].Environment }">${ environments[r].Environment }</option>`
+
+    // $("#environment_input").append(optionhtmlelement);
+
+    $("#programmingLanguages").append(optionhtmlelement);
+
+
+
+
+
+}
+
+
+
+}
+
+
+function errorfn(error, status){
+  console.log(error)
+  console.log(status)
+}
+
+
+
+
+
+
 });
 
 

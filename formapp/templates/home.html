@@ -19,60 +19,6 @@
 <body>
 
 
-<!-- <div class="container">
-
-<form class = "form-control" method="post">
-
-    {% csrf_token %}
-    <label for="country">Country:</label>
-    <select style="width: 30%" id="country" class="js-example-basic-single" name="country">
-        <option value=""></option>
-    </select>
-
-    <label for="state">State:</label>
-    <select style="width: 30%" class="st" name="state" id="state">
-      <option value=""></option>
-    </select>
-
-    <label for="state">Location:</label>
-    <input type="text" name="location" id="location">
-
-
-    <label for="state">Environment:</label>
-    <select style="width: 30%" name="environment" class="environment_input" id="environment_input">
-        <option value=""></option>
-        <option value="Objective C">Objective C</option>
-      </select>
-    
-    <input type="text" id="environment_input" list="programmingLanguages"  name="newenvironment"
-    placeholder="Enter Here" />
-        <datalist id="programmingLanguages">
-        </datalist>
-
-
-    <input type="submit" value="Submit">
-</form>
-
-</div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <div class="container">
@@ -113,11 +59,16 @@
         <div class="col-75">
             <input type="text" id="environment_input" list="programmingLanguages"  name="newenvironment"
             placeholder="Enter Here" />
-                <datalist id="programmingLanguages">
-                </datalist>
+
+
+            <ul class="list">
+              <li class="list-items" onclick="displayNames('Harvey')" style="cursor: pointer;">harvey  <span class="close-button" onclick="removeItem(this)">remove</span></li>
+  
+            </ul>
         </div>
       </div>
       <div class="row">
+
         <input type="submit" value="Submit">
       </div>
     </form>

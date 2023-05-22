@@ -87,55 +87,61 @@ $.ajax({
   url : "/environment-list/",
   dataType: "json",
 
-  success : successfn,
+  success : clickInsideInput(response),
   error : errorfn,
 
 })
 
+
+
+
 function successfn(response, status){
-  console.log(response)
   const { environments } = response
   console.log(environments[0])
-  console.log(environments)
-
-  // console.log(x.id,y.Environment)
-
-
-
-
-
-//   var data = [
-
-// ];
 
 for (let r in environments){
 
+    // let optionhtmlelement =`<option value="${ environments[r].Environment }">${ environments[r].Environment }</option>`
 
-  
-  // data.push(
-  //    {
-  //       id: `${environments[r].id}`,
-  //       text: `${environments[r].Environment}`
-  //   }
-  
-  //   )
+    var liTags =   `<li class="list-items" onclick="displayNames(${ environments[r].Environment })" style="cursor: pointer;">${ environments[r].Environment }</li>`
 
 
-    let optionhtmlelement =`<option value="${ environments[r].Environment }">${ environments[r].Environment }</option>`
 
-    // $("#environment_input").append(optionhtmlelement);
-
-    $("#programmingLanguages").append(optionhtmlelement);
+    $(".list").append(liTags);
 
 
+}
+
+
+// function showSuggestions(){
+   
+//   $(".list").append(liTags);
+
+// }
 
 
 
 }
 
 
+// ###############new code###############
 
-}
+
+function clickInsideInput(response){
+  $("#environment_input").focus(function(){
+    $(this).css("background-color", "yellow");
+  
+    //function triger to show suggestions
+    successfn(response)
+  
+  
+  });
+  }
+  
+
+
+
+
 
 
 function errorfn(error, status){
@@ -145,10 +151,10 @@ function errorfn(error, status){
 
 
 
-
-
-
 });
+
+
+
 
 
 

@@ -83,61 +83,75 @@ $(document).ready(function() {
 
 
 
-$.ajax({
-  url : "/environment-list/",
-  dataType: "json",
+$("#environment_input").focus(function(){
+  $(this).css("background-color", "yellow");
 
-  success : clickInsideInput(response),
-  error : errorfn,
-
-})
+  //function triger to show suggestions
 
 
 
-
-function successfn(response, status){
-  const { environments } = response
-  console.log(environments[0])
-
-for (let r in environments){
-
-    // let optionhtmlelement =`<option value="${ environments[r].Environment }">${ environments[r].Environment }</option>`
-
-    var liTags =   `<li class="list-items" onclick="displayNames(${ environments[r].Environment })" style="cursor: pointer;">${ environments[r].Environment }</li>`
-
-
-
-    $(".list").append(liTags);
-
-
-}
-
-
-// function showSuggestions(){
-   
-//   $(".list").append(liTags);
-
-// }
-
-
-
-}
-
-
-// ###############new code###############
-
-
-function clickInsideInput(response){
-  $("#environment_input").focus(function(){
-    $(this).css("background-color", "yellow");
+  $.ajax({
+    url : "/environment-list/",
+    dataType: "json",
   
-    //function triger to show suggestions
-    successfn(response)
+    success : successfn,
+    error : errorfn,
+  
+  })
   
   
-  });
+  function successfn(response, status){
+    const { environments } = response
+    console.log(environments[0])
+  
+  for (let r in environments){
+  
+      // let optionhtmlelement =`<option value="${ environments[r].Environment }">${ environments[r].Environment }</option>`
+  
+      var liTags =   `<li class="list-items" onclick="displayNames(${ environments[r].Environment })" style="cursor: pointer;">${ environments[r].Environment } <span class="close-button" onclick="removeItem(this)">remove</span> </li>`
+
+      $(".list").append(liTags);
+  
+  }
+
+
+  function removeItem(element) {
+    // You can perform actions here to remove the item
+    // For example, you can use JavaScript to remove the <li> element
+    element.parentNode.parentNode.removeChild(element.parentNode);
   }
   
+  
+  
+  
+  function displayNames(value) {
+  
+    $("#environment_input").val(value)
+    console.log("displayNames called", value);
+    console.log($("#environment_input").val())
+    // input.value = value;
+    // removeElements();
+  
+  }
+
+
+
+  
+  }
+
+
+  
+
+
+
+
+
+
+});
+
+
+
+
 
 
 

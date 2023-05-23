@@ -1,7 +1,7 @@
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 
-from formapp.models import EnvironmentModel
+from formapp.models import EnvironmentModel, CreateData
 
 # Create your views here.
 
@@ -13,18 +13,32 @@ def create_form(request):
         country = request.POST.get("country")
         state = request.POST.get("state")
         location = request.POST.get("location")
-        # environment = request.POST.get("environment")/
         newenvironment = request.POST.get("newenvironment")
         
         
         print("country you selevcte======",country)
-        print("state you selevcted=======",state)
-        print("location you selevcted====",location)
         print("environment you selevcted=======", newenvironment)
         
-        # createObj = EnvironmentModel.objects.create(Environment= newenvironment)
-        # createObj.save()
+        createObj = CreateData.objects.create(country= country,
+                                              state=state,
+                                              location= location,
+                                              environment= newenvironment)
+        createObj.save()
+        print("createdata is saved----------")
         
+        checking_for_env = EnvironmentModel.objects.filter(Environment__contains=newenvironment)
+        print(checking_for_env)
+        if checking_for_env.exists():
+            print("environment already exists")
+        else:
+            print("environment not found")
+            createnv = EnvironmentModel.objects.create(Environment= newenvironment)
+            createnv.save()
+            print("new environment created successfully")
+            
+        
+        
+        return HttpResponseRedirect("/")
     
     return render(request,"home.html")
     
@@ -34,5 +48,5 @@ def create_form(request):
 def environment_list(request):
     environments = EnvironmentModel.objects.all()
     data = {'environments': list(environments.values())}
-    # print(data)
+    print(data)
     return JsonResponse(data)

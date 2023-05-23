@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Create(models.Model):
+class CreateData(models.Model):
     country = models.CharField( max_length=150, null=True, blank=True,)
     state = models.CharField( max_length=150, null=True, blank=True,)
     location = models.CharField( max_length=150, null=True, blank=True,)

@@ -118,7 +118,7 @@ function removeItem(element) {
   
   for (let r in environments){
   
-      var liTags =   `<li id = "${environments[r].Environment}" class="list-items" onclick="displayNames(${ environments[r].Environment })" style="cursor: pointer;">${ environments[r].Environment } <span id = "${environments[r].id}" class="close-button" onclick="removeItem(this)">x</span> </li>`
+      var liTags =   `<li id = "${environments[r].Environment}" class="list-items" style="cursor: pointer;">${ environments[r].Environment } <span id = "${environments[r].id}" class="close-button" onclick="removeItem(this)">x</span> </li>`
 
       $(".list").append(liTags);
     
@@ -127,26 +127,25 @@ function removeItem(element) {
         console.log(extration);
         $("#environment_input").val(extration)
         console.log($("#environment_input").val())
-        
 
-        $("span").click(function(){
-          $("li").hide();
-        })
         
 
           //clear all the item
-          let items = document.querySelectorAll(".list-items");
-          items.forEach((item) => {
-            item.remove();
-          });
+          // let items = document.querySelectorAll(".list-items");
+          // items.forEach((item) => {
+          //   item.remove();
+          // });
 
       })
 
-      // $(`#${environments[r].id}`).click(function() {
-      //     $("li").hide()
-      // })
+      $(`#${environments[r].id}`).click(function() {
+        console.log("clicked on rmove span")
+        console.log(this)
+        console.log(this.parentNode)
+        console.log( this.parentNode.remove())
+        // this.parentNode.removeChild(this)
 
-
+      })
 
 
    }
@@ -196,8 +195,6 @@ function removeElements() {
 
 
 });
-
-
 
 
 

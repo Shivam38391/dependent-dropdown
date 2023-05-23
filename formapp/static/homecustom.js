@@ -1,8 +1,13 @@
+"use strict";
+
 
 import countryStates from './countriesdatasets.json' assert { type: 'json' };
 console.log(countryStates);
 console.log(typeof countryStates);
 console.log(Object.keys(countryStates).length);
+
+
+
 
 
 
@@ -72,7 +77,7 @@ $(document).ready(function() {
         $("#state").change(function(){
             console.log("State has been changed.");
             const selectedState = stateDropdown.value;
-            console.log(selectedState)
+            console.log(selectedState.slice(-1,0))
 
           });
 
@@ -83,12 +88,12 @@ $(document).ready(function() {
 
 
 
+
+
 $("#environment_input").focus(function(){
   $(this).css("background-color", "yellow");
 
   //function triger to show suggestions
-
-
 
   $.ajax({
     url : "/environment-list/",
@@ -98,7 +103,14 @@ $("#environment_input").focus(function(){
     error : errorfn,
   
   })
+
   
+function removeItem(element) {
+  // You can perform actions here to remove the item
+  // For example, you can use JavaScript to remove the <li> element
+  element.parentNode.parentNode.removeChild(element.parentNode);
+}
+
   
   function successfn(response, status){
     const { environments } = response
@@ -106,45 +118,42 @@ $("#environment_input").focus(function(){
   
   for (let r in environments){
   
-      // let optionhtmlelement =`<option value="${ environments[r].Environment }">${ environments[r].Environment }</option>`
-  
-      var liTags =   `<li class="list-items" onclick="displayNames(${ environments[r].Environment })" style="cursor: pointer;">${ environments[r].Environment } <span class="close-button" onclick="removeItem(this)">remove</span> </li>`
+      var liTags =   `<li id = "${environments[r].Environment}" class="list-items" onclick="displayNames(${ environments[r].Environment })" style="cursor: pointer;">${ environments[r].Environment } <span id = "${environments[r].id}" class="close-button" onclick="removeItem(this)">x</span> </li>`
 
       $(".list").append(liTags);
+    
+      $(`#${environments[r].Environment}`).click(function() {
+        let extration = this.textContent.trim().slice(0,-2)
+        console.log(extration);
+        $("#environment_input").val(extration)
+        console.log($("#environment_input").val())
+        
+
+        $("span").click(function(){
+          $("li").hide();
+        })
+        
+
+          //clear all the item
+          let items = document.querySelectorAll(".list-items");
+          items.forEach((item) => {
+            item.remove();
+          });
+
+      })
+
+      // $(`#${environments[r].id}`).click(function() {
+      //     $("li").hide()
+      // })
+
+
+
+
+   }
+
   
+
   }
-
-
-  function removeItem(element) {
-    // You can perform actions here to remove the item
-    // For example, you can use JavaScript to remove the <li> element
-    element.parentNode.parentNode.removeChild(element.parentNode);
-  }
-  
-  
-  
-  
-  function displayNames(value) {
-  
-    $("#environment_input").val(value)
-    console.log("displayNames called", value);
-    console.log($("#environment_input").val())
-    // input.value = value;
-    // removeElements();
-  
-  }
-
-
-
-  
-  }
-
-
-  
-
-
-
-
 
 
 });
@@ -152,8 +161,11 @@ $("#environment_input").focus(function(){
 
 
 
+$("*").focus(function(){
+  // $(this).css("background-color", "skyblue");
 
-
+  removeElements()
+})
 
 
 
@@ -165,7 +177,27 @@ function errorfn(error, status){
 
 
 
+
+function removeItem(element) {
+  // You can perform actions here to remove the item
+  // For example, you can use JavaScript to remove the <li> element
+  element.parentNode.parentNode.removeChild(element.parentNode);
+}
+
+
+function removeElements() {
+  //clear all the item
+  let items = document.querySelectorAll(".list-items");
+  items.forEach((item) => {
+    item.remove();
+  });
+}
+
+
+
 });
+
+
 
 
 

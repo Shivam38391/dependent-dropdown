@@ -51,7 +51,6 @@ def create_form(request):
 def environment_list(request):
     environments = EnvironmentModel.objects.all()
     data = {'environments': list(environments.values())}
-    print(data)
     return JsonResponse(data)
 
 

@@ -40,6 +40,8 @@ const csrftoken = getCookie('csrftoken');
 
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
+
+  //settings of Select2 librarary for dropdown search functionlity in dropdown
     $('.js-example-basic-single').select2({
         placeholder: 'Select an option',
         allowClear: true,
@@ -47,9 +49,6 @@ $(document).ready(function() {
       });
 
 
-    //   $('.js-example-basic-single').trigger('change')
-
-    //  console.log( $('.js-example-basic-single').select2('data'));
 
       let selectedOne = $('.js-example-basic-single').find(':selected');
       console.log(selectedOne)
@@ -111,12 +110,12 @@ $(document).ready(function() {
 
 
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++form ajax calls +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++++++++++++++++++++++form ajax calls +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
 
-
+//when user clicks the input field of environment hit the api that fetches the environment from the server
 $("#environment_input").focus(function(){
   $(this).css("background-color", "yellow");
 
@@ -132,7 +131,7 @@ $("#environment_input").focus(function(){
   })
 
 
-  
+  //when the data fetch succesfully
   function successfn(response, status){
     const { environments } = response
     console.log(environments[0])
@@ -141,11 +140,15 @@ $("#environment_input").focus(function(){
   
       var liTags =   `<li id = "${environments[r].Environment}" class="list-items" style="cursor: pointer;">${ environments[r].Environment } <span id = "${environments[r].id}" class="close-button" onclick="removeItem(this)">x</span> </li>`
 
+      //append the li tags
       $(".list").append(liTags);
     
+
+      //when user clicks on any of  the suggestion fill the the input field with that text
       $(`#${environments[r].Environment}`).click(function() {
         let extration = this.textContent.trim().slice(0,-2)
         console.log(extration);
+        //fill the the input field with that text
         $("#environment_input").val(extration)
         console.log($("#environment_input").val())
 
@@ -159,20 +162,22 @@ $("#environment_input").focus(function(){
 
       })
 
+
+      //when user clicks on any of  the suggestion it will delete that suggestion from the saved history env
       $(`#${environments[r].id}`).click(function() {
         console.log("clicked on rmove span")
         console.log(this)
         console.log(this.parentNode)
 
 
-
+//it will delete that suggestion from the saved history env
         let urlForDelete = `/env-delete/${environments[r].id}`
         console.log(urlForDelete)
 
 
 
         
-
+//it will delete that suggestion from the saved history env
         fetch( urlForDelete,{
 
         method : 'DELETE',
@@ -181,21 +186,10 @@ $("#environment_input").focus(function(){
       
         }).then((response) => {
           console.log("deleted response")
+          // and remove that suggestion from the list
           console.log( this.parentNode.remove())
         // this.parentNode.removeChild(this)
         })
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -218,6 +212,8 @@ $("#environment_input").focus(function(){
 $("*").focus(function(){
   // $(this).css("background-color", "skyblue");
 
+
+//may be the solution of double click issue with this removeElement
   removeElements()
 })
 
@@ -230,13 +226,6 @@ function errorfn(error, status){
 }
 
 
-
-
-// function removeItem(element) {
-//   // You can perform actions here to remove the item
-//   // For example, you can use JavaScript to remove the <li> element
-//   element.parentNode.parentNode.removeChild(element.parentNode);
-// }
 
 
 function removeElements() {

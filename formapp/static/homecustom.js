@@ -11,6 +11,33 @@ console.log(Object.keys(countryStates).length);
 
 
 
+// ==============function to get crsf-token =================================================================
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+
+// ==============function to get crsf-token =================================================================
+
+
+
+
+
+
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
     $('.js-example-basic-single').select2({
@@ -104,12 +131,6 @@ $("#environment_input").focus(function(){
   
   })
 
-  
-function removeItem(element) {
-  // You can perform actions here to remove the item
-  // For example, you can use JavaScript to remove the <li> element
-  element.parentNode.parentNode.removeChild(element.parentNode);
-}
 
   
   function successfn(response, status){
@@ -142,8 +163,42 @@ function removeItem(element) {
         console.log("clicked on rmove span")
         console.log(this)
         console.log(this.parentNode)
-        console.log( this.parentNode.remove())
+
+
+
+        let urlForDelete = `/env-delete/${environments[r].id}`
+        console.log(urlForDelete)
+
+
+
+        
+
+        fetch( urlForDelete,{
+
+        method : 'DELETE',
+        headers: {'Content-Type': 'application/json', 
+        'X-CSRFToken': csrftoken,}
+      
+        }).then((response) => {
+          console.log("deleted response")
+          console.log( this.parentNode.remove())
         // this.parentNode.removeChild(this)
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       })
 
@@ -177,11 +232,11 @@ function errorfn(error, status){
 
 
 
-function removeItem(element) {
-  // You can perform actions here to remove the item
-  // For example, you can use JavaScript to remove the <li> element
-  element.parentNode.parentNode.removeChild(element.parentNode);
-}
+// function removeItem(element) {
+//   // You can perform actions here to remove the item
+//   // For example, you can use JavaScript to remove the <li> element
+//   element.parentNode.parentNode.removeChild(element.parentNode);
+// }
 
 
 function removeElements() {

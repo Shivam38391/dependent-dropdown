@@ -1,6 +1,9 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+from rest_framework import status
 from formapp.models import EnvironmentModel, CreateData
 
 # Create your views here.
@@ -50,3 +53,14 @@ def environment_list(request):
     data = {'environments': list(environments.values())}
     print(data)
     return JsonResponse(data)
+
+
+@api_view(["DELETE", ])
+def environment_detail(request,pk):
+    
+    if request.method == "DELETE":
+        env = EnvironmentModel.objects.get(pk=pk)
+        env.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
